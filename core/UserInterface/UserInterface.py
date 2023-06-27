@@ -1,6 +1,8 @@
 # coding=utf-8
 
-"""
+""" Classes for user interface
+
+License notice:
    Copyright 2023 劉啟迪(QidiLiu)
 
    Licensed under the Apache License, Version 2.0 (the "License");
