@@ -23,11 +23,10 @@ __author__ = 'QidiLiu'
 import sys
 
 from PySide6 import QtCore
-from PySide6.QtWidgets import QApplication
 from PySide6.QtUiTools import QUiLoader
+from PySide6.QtWidgets import QApplication
 
 class UserInterface(QtCore.QObject):
-
     # public
 
     app = QApplication(sys.argv)
@@ -41,7 +40,6 @@ class UserInterface(QtCore.QObject):
     def __init__(self):
         super().__init__()
 
-        self.ui.setWindowTitle("Mask Converter")
         self.ui.confirm_button.clicked.connect(self.respondConfirmButton)
 
         self.ui.show()
@@ -50,4 +48,3 @@ class UserInterface(QtCore.QObject):
 
 if __name__ == '__main__':
     _ui = UserInterface()
-
