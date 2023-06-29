@@ -19,3 +19,35 @@ License notice:
 """
 
 __author__ = 'QidiLiu'
+
+import sys
+
+from PySide6 import QtCore
+from PySide6.QtWidgets import QApplication
+from PySide6.QtUiTools import QUiLoader
+
+class UserInterface(QtCore.QObject):
+
+    # public
+
+    app = QApplication(sys.argv)
+    ui = QUiLoader().load("../../gui/main.ui", None)
+
+    def respondConfirmButton(self):
+        print('[INFO] button pressed.')
+
+    # constructor and deconstructor
+
+    def __init__(self):
+        super().__init__()
+
+        self.ui.setWindowTitle("Mask Converter")
+        self.ui.confirm_button.clicked.connect(self.respondConfirmButton)
+
+        self.ui.show()
+        sys.exit(self.app.exec())
+
+
+if __name__ == '__main__':
+    _ui = UserInterface()
+
