@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>469</width>
+    <width>617</width>
     <height>121</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>掩膜转换器</string>
+   <string>掩膜轉換器</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
@@ -21,7 +21,7 @@
        <item>
         <widget class="QLabel" name="images_label">
          <property name="text">
-          <string>&lt;图片路径&gt;</string>
+          <string>&lt;圖像路徑 | path of images&gt;</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -31,7 +31,7 @@
        <item>
         <widget class="QLabel" name="json_label">
          <property name="text">
-          <string>&lt;JSON 数据路径&gt;</string>
+          <string>&lt;JSON文件路徑 | path of JSON file&gt;</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -45,14 +45,14 @@
        <item>
         <widget class="QPushButton" name="images_button">
          <property name="text">
-          <string>选择图片路径</string>
+          <string>選擇圖像所在資料夾 | Select path of images</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="json_button">
          <property name="text">
-          <string>选择JSON数据路径</string>
+          <string>選擇JSON文件路徑 | Select path of JSON file</string>
          </property>
         </widget>
        </item>
@@ -84,7 +84,7 @@
          <locale language="Chinese" country="China"/>
         </property>
         <property name="text">
-         <string>确定</string>
+         <string>確定 | Confirm</string>
         </property>
         <property name="iconSize">
          <size>

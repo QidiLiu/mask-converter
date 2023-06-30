@@ -1,6 +1,8 @@
 # mask-converter
 
-Convert contours in JSON file (result of VIA 2) to mask in PNG file
+（[👉轉至中文版README](./doc/README_CN.md）
+
+Convert contours in JSON file (result of VIA 2) into mask in PNG file
 
 ## 1. Introduction
 
