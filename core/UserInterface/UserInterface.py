@@ -30,8 +30,11 @@ class UserInterface(QtCore.QObject):
 
     # private
 
+    __images_path = None
+    __json_path = None
+    __convert_func = None
     __app = QApplication(sys.argv)
-    __ui = QUiLoader().load("../../gui/main.ui", None)
+    __ui = None
 
     def __updateConfirmButtonState(self):
         if (self.__ui.images_label.text()[0] != '<') and (self.__ui.json_label.text()[0] != '<'):
@@ -45,7 +48,7 @@ class UserInterface(QtCore.QObject):
             self.__ui.images_button.setText("修改图片文件夹路径")
             self.__updateConfirmButtonState()
 
-    def __resopondJsonButton(self):
+    def __respondJsonButton(self):
         file_path, _ = QFileDialog.getOpenFileName(None, "选择JSON文件", "", "JSON Files (*.json)")
 
         if file_path:
@@ -54,20 +57,19 @@ class UserInterface(QtCore.QObject):
             self.__updateConfirmButtonState()
 
     def __respondConfirmButton(self):
-        print('[INFO] button pressed.')
-        images_path = self.__ui.images_label.text()
-        json_path = self.__ui.json_label.text()
-        print(f'[INFO] images_path: {images_path}')
-        print(f'[INFO] json_path: {json_path}')
         self.__ui.confirm_button.setEnabled(False)
+        self.__images_path = self.__ui.images_label.text()
+        self.__json_path = self.__ui.json_label.text()
+        self.__convert_func(self.__images_path, self.__json_path)
 
     # constructor and deconstructor
 
-    def __init__(self):
+    def __init__(self, convert_func, ui_path:str):
+        self.__convert_func = convert_func
         super().__init__()
-
+        self.__ui = QUiLoader().load(ui_path, None)
         self.__ui.images_button.clicked.connect(self.__respondImagesButton)
-        self.__ui.json_button.clicked.connect(self.__resopondJsonButton)
+        self.__ui.json_button.clicked.connect(self.__respondJsonButton)
         self.__ui.confirm_button.clicked.connect(self.__respondConfirmButton)
 
         self.__ui.show()
@@ -75,4 +77,7 @@ class UserInterface(QtCore.QObject):
 
 
 if __name__ == '__main__':
-    _ui = UserInterface()
+    sys.path.append('../_MaskConverter')
+    import MaskConverter
+
+    _ui = UserInterface(MaskConverter.convert, "../../gui/main.ui")

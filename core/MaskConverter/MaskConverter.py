@@ -1,6 +1,6 @@
 # coding=utf-8
 
-""" util-functions
+""" Functions for converting JSON contours into PNG masks
 
 License notice:
    Copyright 2023 劉啟迪(QidiLiu)
@@ -21,10 +21,11 @@ License notice:
 __author__ = 'QidiLiu'
 
 import numpy as np
+import cv2 as cv
 import json
+from glob import glob
 
-
-def extractDataFromJson(in_path: str) -> dict:
+def extractDataFromJson(in_path:str) -> dict:
     out_data = {}
 
     with open(in_path, 'r') as file_reader:
@@ -44,10 +45,22 @@ def extractDataFromJson(in_path: str) -> dict:
 
     return out_data
 
+def convert(images_path: str, json_path: str):
+    cnts_data = extractDataFromJson(json_path)
+    img_paths = glob(images_path + '/*.png')
+
+    for img_path in img_paths:
+        img_path = img_path.replace('\\', '/')
+        img = cv.imread(img_path)
+        img_file_name = img_path.split('/')[-1]
+        canvas = np.zeros(img.shape, np.uint8)
+        mask = cv.drawContours(canvas, cnts_data[img_file_name], -1, (255, 255, 255), cv.FILLED)
+        cv.imwrite(img_path.replace('.png', '_mask.png'), mask)
+
+    print('[INFO] Conversion finished.')
+
 
 if __name__ == '__main__':
-    import cv2 as cv
-
     _img_15 = cv.imread('../../data/fake(15).png')
     _img_16 = cv.imread('../../data/fake(16).png')
 

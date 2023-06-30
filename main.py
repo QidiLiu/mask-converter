@@ -19,3 +19,8 @@ License notice:
 """
 
 __author__ = 'QidiLiu'
+
+import core.MaskConverter.MaskConverter as mc
+import core.UserInterface.UserInterface as ui
+
+_ui = ui.UserInterface(mc.convert, './gui/main.ui')
