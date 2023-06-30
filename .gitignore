@@ -1,5 +1,6 @@
 # My custom items
 data/
+asset/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
