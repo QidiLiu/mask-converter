@@ -24,26 +24,54 @@ import sys
 
 from PySide6 import QtCore
 from PySide6.QtUiTools import QUiLoader
-from PySide6.QtWidgets import QApplication
+from PySide6.QtWidgets import QApplication, QFileDialog
 
 class UserInterface(QtCore.QObject):
-    # public
 
-    app = QApplication(sys.argv)
-    ui = QUiLoader().load("../../gui/main.ui", None)
+    # private
 
-    def respondConfirmButton(self):
+    __app = QApplication(sys.argv)
+    __ui = QUiLoader().load("../../gui/main.ui", None)
+
+    def __updateConfirmButtonState(self):
+        if (self.__ui.images_label.text()[0] != '<') and (self.__ui.json_label.text()[0] != '<'):
+            self.__ui.confirm_button.setEnabled(True)
+
+    def __respondImagesButton(self):
+        folder_path = QFileDialog.getExistingDirectory(None, "选择图片文件夹")
+
+        if folder_path:
+            self.__ui.images_label.setText(folder_path)
+            self.__ui.images_button.setText("修改图片文件夹路径")
+            self.__updateConfirmButtonState()
+
+    def __resopondJsonButton(self):
+        file_path, _ = QFileDialog.getOpenFileName(None, "选择JSON文件", "", "JSON Files (*.json)")
+
+        if file_path:
+            self.__ui.json_label.setText(file_path)
+            self.__ui.json_button.setText("修改JSON文件路径")
+            self.__updateConfirmButtonState()
+
+    def __respondConfirmButton(self):
         print('[INFO] button pressed.')
+        images_path = self.__ui.images_label.text()
+        json_path = self.__ui.json_label.text()
+        print(f'[INFO] images_path: {images_path}')
+        print(f'[INFO] json_path: {json_path}')
+        self.__ui.confirm_button.setEnabled(False)
 
     # constructor and deconstructor
 
     def __init__(self):
         super().__init__()
 
-        self.ui.confirm_button.clicked.connect(self.respondConfirmButton)
+        self.__ui.images_button.clicked.connect(self.__respondImagesButton)
+        self.__ui.json_button.clicked.connect(self.__resopondJsonButton)
+        self.__ui.confirm_button.clicked.connect(self.__respondConfirmButton)
 
-        self.ui.show()
-        sys.exit(self.app.exec())
+        self.__ui.show()
+        sys.exit(self.__app.exec())
 
 
 if __name__ == '__main__':
