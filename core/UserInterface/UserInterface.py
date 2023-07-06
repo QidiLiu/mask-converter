@@ -41,26 +41,26 @@ class UserInterface(QtCore.QObject):
             self.__ui.confirm_button.setEnabled(True)
 
     def __respondImagesButton(self):
-        folder_path = QFileDialog.getExistingDirectory(
+        folder_path_ = QFileDialog.getExistingDirectory(
             None,
             "選擇圖像所在資料夾 | Select folder path of images"
         )
 
-        if folder_path:
-            self.__ui.images_label.setText(folder_path)
+        if folder_path_:
+            self.__ui.images_label.setText(folder_path_)
             self.__ui.images_button.setText("修改圖像所在資料夾 | Change folder path of images")
             self.__updateConfirmButtonState()
 
     def __respondJsonButton(self):
-        file_path, _ = QFileDialog.getOpenFileName(
+        file_path_, _ = QFileDialog.getOpenFileName(
             None,
             "選擇JSON文件 | Select JSON file",
             "",
             "JSON Files (*.json)"
         )
 
-        if file_path:
-            self.__ui.json_label.setText(file_path)
+        if file_path_:
+            self.__ui.json_label.setText(file_path_)
             self.__ui.json_button.setText("修改JSON文件路徑 | Change JSON file")
             self.__updateConfirmButtonState()
 

@@ -26,36 +26,36 @@ import json
 from glob import glob
 
 def extractDataFromJson(in_path:str) -> dict:
-    out_data = {}
+    out_data_ = {}
 
-    with open(in_path, 'r') as file_reader:
-        data = json.load(file_reader)
+    with open(in_path, 'r') as file_reader_:
+        data_ = json.load(file_reader_)
 
-    for file_name, file_data in data.items():
-        cnts = []
+    for file_name_, file_data_ in data_.items():
+        cnts_ = []
 
-        for region in file_data['regions']:
-            shape_attributes = region['shape_attributes']
-            points_x = shape_attributes['all_points_x']
-            points_y = shape_attributes['all_points_y']
-            cnt = np.column_stack((points_x, points_y))
-            cnts.append(cnt)
+        for region_ in file_data_['regions']:
+            shape_attributes_ = region_['shape_attributes']
+            points_x_ = shape_attributes_['all_points_x']
+            points_y_ = shape_attributes_['all_points_y']
+            cnt_ = np.column_stack((points_x_, points_y_))
+            cnts_.append(cnt_)
 
-        out_data[file_data['filename']] = cnts
+        out_data_[file_data_['filename']] = cnts_
 
-    return out_data
+    return out_data_
 
 def convert(images_path: str, json_path: str):
-    cnts_data = extractDataFromJson(json_path)
-    img_paths = glob(images_path + '/*.png')
+    cnts_data_ = extractDataFromJson(json_path)
+    img_paths_ = glob(images_path + '/*.png')
 
-    for img_path in img_paths:
-        img_path = img_path.replace('\\', '/')
-        img = cv.imread(img_path)
-        img_file_name = img_path.split('/')[-1]
-        canvas = np.zeros(img.shape, np.uint8)
-        mask = cv.drawContours(canvas, cnts_data[img_file_name], -1, (255, 255, 255), cv.FILLED)
-        cv.imwrite(img_path.replace('.png', '_mask.png'), mask)
+    for img_path_ in img_paths_:
+        img_path_ = img_path_.replace('\\', '/')
+        img_ = cv.imread(img_path_)
+        img_file_name_ = img_path_.split('/')[-1]
+        canvas_ = np.zeros(img_.shape, np.uint8)
+        mask_ = cv.drawContours(canvas_, cnts_data_[img_file_name_], -1, (255, 255, 255), cv.FILLED)
+        cv.imwrite(img_path_.replace('.png', '_mask.png'), mask_)
 
     print('[INFO] Conversion finished.')
 
