@@ -31,17 +31,17 @@ def extractDataFromJson(in_path:str) -> dict:
     with open(in_path, 'r') as file_reader_:
         data_ = json.load(file_reader_)
 
-    for file_name_, file_data_ in data_.items():
+    for _, file_data in data_.items():
         cnts_ = []
 
-        for region_ in file_data_['regions']:
-            shape_attributes_ = region_['shape_attributes']
+        for region in file_data['regions']:
+            shape_attributes_ = region['shape_attributes']
             points_x_ = shape_attributes_['all_points_x']
             points_y_ = shape_attributes_['all_points_y']
             cnt_ = np.column_stack((points_x_, points_y_))
             cnts_.append(cnt_)
 
-        out_data_[file_data_['filename']] = cnts_
+        out_data_[file_data['filename']] = cnts_
 
     return out_data_
 
@@ -49,13 +49,13 @@ def convert(images_path: str, json_path: str):
     cnts_data_ = extractDataFromJson(json_path)
     img_paths_ = glob(images_path + '/*.png')
 
-    for img_path_ in img_paths_:
-        img_path_ = img_path_.replace('\\', '/')
-        img_ = cv.imread(img_path_)
-        img_file_name_ = img_path_.split('/')[-1]
+    for img_path in img_paths_:
+        img_path = img_path.replace('\\', '/')
+        img_ = cv.imread(img_path)
+        img_file_name_ = img_path.split('/')[-1]
         canvas_ = np.zeros(img_.shape, np.uint8)
         mask_ = cv.drawContours(canvas_, cnts_data_[img_file_name_], -1, (255, 255, 255), cv.FILLED)
-        cv.imwrite(img_path_.replace('.png', '_mask.png'), mask_)
+        cv.imwrite(img_path.replace('.png', '_mask.png'), mask_)
 
     print('[INFO] Conversion finished.')
 
