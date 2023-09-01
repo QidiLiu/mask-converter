@@ -20,9 +20,9 @@ License notice:
 
 __author__ = 'QidiLiu'
 
-import core.MaskConverter.MaskConverter as mc
-import core.UserInterface.UserInterface as ui
+import core.MaskConverter.MaskConverter as mask_converter
+import core.UserInterface.UserInterface as user_interface
 
 
 if __name__ == '__main__':
-    _ui = ui.UserInterface(mc.convert, './gui/main.ui')
+    ui = user_interface.UserInterface(mask_converter.convert, '../gui/main.ui')

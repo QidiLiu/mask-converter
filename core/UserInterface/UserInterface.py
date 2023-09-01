@@ -52,15 +52,15 @@ class UserInterface(QtCore.QObject):
             self.__updateConfirmButtonState()
 
     def __respondJsonButton(self):
-        file_path_, _ = QFileDialog.getOpenFileName(
+        file_path, _ = QFileDialog.getOpenFileName(
             None,
             "選擇JSON文件 | Select JSON file",
             "",
             "JSON Files (*.json)"
         )
 
-        if file_path_:
-            self.__ui.json_label.setText(file_path_)
+        if file_path:
+            self.__ui.json_label.setText(file_path)
             self.__ui.json_button.setText("修改JSON文件路徑 | Change JSON file")
             self.__updateConfirmButtonState()
 
@@ -72,10 +72,10 @@ class UserInterface(QtCore.QObject):
 
     # constructor and deconstructor
 
-    def __init__(self, convert_func, ui_path:str):
-        self.__convert_func = convert_func
+    def __init__(self, convert_func_, ui_path_:str):
+        self.__convert_func = convert_func_
         super().__init__()
-        self.__ui = QUiLoader().load(ui_path, None)
+        self.__ui = QUiLoader().load(ui_path_, None)
         self.__ui.images_button.clicked.connect(self.__respondImagesButton)
         self.__ui.json_button.clicked.connect(self.__respondJsonButton)
         self.__ui.confirm_button.clicked.connect(self.__respondConfirmButton)
@@ -85,7 +85,7 @@ class UserInterface(QtCore.QObject):
 
 
 if __name__ == '__main__':
-    sys.path.append('../_MaskConverter')
+    sys.path.append('../MaskConverter')
     import MaskConverter
 
-    _ui = UserInterface(MaskConverter.convert, "../../gui/main.ui")
+    ui = UserInterface(MaskConverter.convert, "../../gui/main.ui")
