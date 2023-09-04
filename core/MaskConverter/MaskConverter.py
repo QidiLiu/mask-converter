@@ -25,10 +25,10 @@ import cv2 as cv
 import json
 from glob import glob
 
-def extractDataFromJson(in_path_:str) -> dict:
+def extractDataFromJson(in_path:str) -> dict:
     out_data = {}
 
-    with open(in_path_, 'r') as file_reader:
+    with open(in_path, 'r') as file_reader:
         data = json.load(file_reader)
 
     for _, file_data in data.items():
@@ -45,9 +45,9 @@ def extractDataFromJson(in_path_:str) -> dict:
 
     return out_data
 
-def convert(img_paths_: str, json_path_: str):
-    cnts_data = extractDataFromJson(json_path_)
-    img_paths = glob(img_paths_ + '/*.png')
+def convert(in_img_paths: str, in_json_path: str):
+    cnts_data = extractDataFromJson(in_json_path)
+    img_paths = glob(in_img_paths + '/*.png')
 
     for img_path in img_paths:
         img_path = img_path.replace('\\', '/')

@@ -72,10 +72,10 @@ class UserInterface(QtCore.QObject):
 
     # constructor and deconstructor
 
-    def __init__(self, convert_func_, ui_path_:str):
-        self.__convert_func = convert_func_
+    def __init__(self, init_convert_func, init_ui_path:str):
+        self.__convert_func = init_convert_func
         super().__init__()
-        self.__ui = QUiLoader().load(ui_path_, None)
+        self.__ui = QUiLoader().load(init_ui_path, None)
         self.__ui.images_button.clicked.connect(self.__respondImagesButton)
         self.__ui.json_button.clicked.connect(self.__respondJsonButton)
         self.__ui.confirm_button.clicked.connect(self.__respondConfirmButton)
