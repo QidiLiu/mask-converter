@@ -33,7 +33,7 @@ class UserInterface(QtCore.QObject):
     __images_path = None
     __json_path = None
     __convert_func = None
-    __app = QApplication(sys.argv)
+    __app = None
     __ui = None
 
     def __updateConfirmButtonState(self):
@@ -75,7 +75,15 @@ class UserInterface(QtCore.QObject):
     def __init__(self, init_convert_func, init_ui_path:str):
         self.__convert_func = init_convert_func
         super().__init__()
-        self.__ui = QUiLoader().load(init_ui_path, None)
+        ui_file = QFile(init_ui_path)
+
+        if (not ui_file.open(QIODevice.ReadOnly)):
+            UIMANAGER_LOGGER.error(f"Cannot open main.ui: {ui_file.errorString()}")
+            sys.exit(-1)
+
+        loader = QUiLoader()
+        self.__app = QApplication(sys.argv)
+        self.__ui = loader.load(ui_file)
         self.__ui.images_button.clicked.connect(self.__respondImagesButton)
         self.__ui.json_button.clicked.connect(self.__respondJsonButton)
         self.__ui.confirm_button.clicked.connect(self.__respondConfirmButton)
